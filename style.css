@@ -5,6 +5,17 @@
   padding: 0;
 }
 
+/* Metric-adjusted local fallback for Inter — sized to match Inter's box
+   model so hero text doesn't reflow (CLS) once the webfont swaps in. */
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial');
+  ascent-override: 90.44%;
+  descent-override: 22.52%;
+  line-gap-override: 0%;
+  size-adjust: 107.12%;
+}
+
 :root {
   --bg:                 #0d1117;
   --bg-card:            #161b22;
@@ -26,7 +37,7 @@
   --terminal-cmd:       #60a5fa;
   --terminal-out:       #8b949e;
   --font-mono:          'JetBrains Mono', 'Courier New', monospace;
-  --font-sans:          'Inter', system-ui, sans-serif;
+  --font-sans:          'Inter', 'Inter Fallback', system-ui, sans-serif;
   --radius-sm:          6px;
   --radius:             10px;
   --radius-lg:          16px;
@@ -316,7 +327,11 @@ ul { list-style: none; }
 
 .terminal-body {
   padding: 20px;
-  min-height: 170px;
+  /* Reserves enough height for all 8 typed lines up front (line-height 2 ×
+     0.875rem × 8 lines + padding, with wrap-room to spare) so the typewriter
+     animation in main.js doesn't grow the box mid-load and shift .hero-text
+     via the grid's align-items: center (a real, measured CLS source). */
+  min-height: 320px;
   line-height: 2;
 }
 
