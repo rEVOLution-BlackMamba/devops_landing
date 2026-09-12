@@ -1,3 +1,4 @@
+# Synthetic uptime probe for the live GitHub Pages site.
 name: Uptime check
 
 on:
