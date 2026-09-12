@@ -26,6 +26,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
       - name: Check required files exist
         run: |
           for f in index.html style.css main.js Dockerfile docker-compose.yml nginx.conf favicon.svg .well-known/security.txt; do
