@@ -8,7 +8,7 @@ RUN test -s index.html && test -s style.css && test -s main.js && test -s favico
     && echo "Static assets validated."
 
 # Stage 2 — serve with hardened nginx
-FROM nginx:1.27-alpine
+FROM nginx:1.31-alpine
 
 LABEL maintainer="luis.bastida@proton.me"
 LABEL org.opencontainers.image.title="devops-landing"
