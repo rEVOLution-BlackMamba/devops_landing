@@ -24,14 +24,22 @@ function runMain(seed) {
   // handlers close over the *global* `document`/`window` bindings and fire later,
   // when assertions dispatch synthetic events — they must still resolve to this
   // shim. Each call simply overwrites these with a fresh shim, so tests stay isolated.
-  Object.assign(globalThis, {
+  //
+  // Object.assign can't be used here: newer Node versions expose a built-in
+  // `navigator` global as a getter with no setter, and Object.assign's plain
+  // [[Set]] throws on that ("Cannot set property navigator ... which has only
+  // a getter"). Object.defineProperty replaces the whole descriptor instead,
+  // which Node's built-in globals allow specifically so they can be overridden.
+  for (const [key, value] of Object.entries({
     document: shim.document,
     window: shim.window,
     localStorage: shim.localStorage,
     navigator: shim.navigator,
     IntersectionObserver: shim.IntersectionObserver,
     requestAnimationFrame: shim.requestAnimationFrame,
-  });
+  })) {
+    Object.defineProperty(globalThis, key, { value, configurable: true, writable: true, enumerable: true });
+  }
 
   const realLog = console.log;
   console.log = () => {}; // silence the console-easter-egg banner during test runs
