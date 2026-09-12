@@ -15,6 +15,11 @@ LABEL org.opencontainers.image.title="devops-landing"
 LABEL org.opencontainers.image.description="Luis Angel — DevOps Portfolio"
 LABEL org.opencontainers.image.source="https://github.com/rEVOLution-BlackMamba/devops_landing"
 
+# Pulls in Alpine's latest patched packages at build time — the upstream
+# nginx:1.31-alpine layers are only rebuilt periodically, so pinned OS
+# packages (e.g. util-linux/libuuid) can lag behind already-fixed CVEs.
+RUN apk update && apk upgrade --no-cache
+
 RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
