@@ -322,7 +322,10 @@ ul { list-style: none; }
 .terminal-title {
   margin-left: 8px;
   font-size: 0.75rem;
-  color: #656d76;
+  /* #656d76 on this always-dark #161b22 titlebar was only 3.3:1 (WCAG AA
+     needs 4.5:1) — #9198a1 is the same dark-theme text-dim value used
+     elsewhere, which measures 5.94:1 against this background. */
+  color: #9198a1;
 }
 
 .terminal-body {
