@@ -1,5 +1,5 @@
 # Stage 1 — validate static assets exist and are non-empty
-FROM alpine:3.20 AS validator
+FROM alpine:3.24 AS validator
 WORKDIR /src
 COPY index.html style.css main.js favicon.svg robots.txt sitemap.xml ./
 COPY .well-known ./.well-known/
