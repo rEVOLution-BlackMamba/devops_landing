@@ -1,0 +1,228 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  packages: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+
+  # ── 1. Validate ────────────────────────────────────────────
+  validate:
+    name: Validate static assets
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check required files exist
+        run: |
+          for f in index.html style.css main.js Dockerfile docker-compose.yml nginx.conf favicon.svg .well-known/security.txt; do
+            if [ ! -f "$f" ]; then
+              echo "ERROR: $f not found"; exit 1
+            fi
+            echo "OK: $f"
+          done
+
+      - name: Parse HTML
+        run: |
+          python3 -c "
+          from html.parser import HTMLParser
+          class V(HTMLParser): pass
+          with open('index.html') as f: V().feed(f.read())
+          print('HTML OK')
+          "
+
+      - name: Check CSS
+        run: |
+          python3 -c "
+          with open('style.css','rb') as f: c=f.read()
+          c.decode('utf-8')
+          assert len(c)>500,'style.css too small'
+          print('CSS OK:',len(c),'bytes')
+          "
+
+      - name: Check JS syntax
+        run: node --check main.js && echo "JS OK"
+
+      - name: Run unit tests
+        run: node --test test/*.test.js
+
+      - name: Lint Dockerfile
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: Dockerfile
+
+      - name: Scan for secrets with Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # ── 2. Build, test & publish image ────────────────────────
+  build-publish:
+    name: Build, test & publish image
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: validate
+    outputs:
+      digest: ${{ steps.push.outputs.digest }}
+      owner_lc: ${{ steps.owner.outputs.lc }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # GHCR/Docker image refs must be lowercase; github.repository_owner
+      # preserves the account's chosen casing (e.g. "rEVOLution-BlackMamba").
+      - name: Compute lowercase image owner
+        id: owner
+        run: echo "lc=${OWNER,,}" >> "$GITHUB_OUTPUT"
+        env:
+          OWNER: ${{ github.repository_owner }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build amd64 image locally (for smoke test + Lighthouse)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          load: true
+          push: false
+          platforms: linux/amd64
+          tags: devops-landing:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Start container
+        run: docker run -d --name landing -p 8080:80 devops-landing:ci
+
+      - name: Wait for nginx
+        run: sleep 3
+
+      - name: Smoke test (HTTP 200)
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/)
+          echo "HTTP $STATUS"
+          [ "$STATUS" = "200" ] || { docker logs landing; exit 1; }
+          echo "Smoke test passed."
+
+      - name: Audit with Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          urls: http://localhost:8080/
+          configPath: .lighthouserc.json
+          uploadArtifacts: false
+          temporaryPublicStorage: false
+
+      - name: Accessibility audit (pa11y-ci, WCAG2AA)
+        run: npx --yes pa11y-ci --config .pa11yci.json
+
+      - name: Push multi-platform image to GHCR
+        id: push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          platforms: linux/amd64,linux/arm64
+          sbom: true
+          provenance: true
+          tags: |
+            ghcr.io/${{ steps.owner.outputs.lc }}/devops_landing:latest
+            ghcr.io/${{ steps.owner.outputs.lc }}/devops_landing:sha-${{ github.sha }}
+          cache-from: type=gha
+
+      - name: Attest build provenance (SLSA)
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-name: ghcr.io/${{ steps.owner.outputs.lc }}/devops_landing
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: true
+
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@v3
+
+      - name: Sign image (keyless via GitHub OIDC)
+        run: |
+          cosign sign --yes \
+            ghcr.io/${{ steps.owner.outputs.lc }}/devops_landing@${{ steps.push.outputs.digest }}
+
+      - name: Post build summary
+        run: |
+          echo "## Published Image" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| | |" >> $GITHUB_STEP_SUMMARY
+          echo "|---|---|" >> $GITHUB_STEP_SUMMARY
+          echo "| **Registry** | \`ghcr.io/${{ steps.owner.outputs.lc }}/devops_landing\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Digest** | \`${{ steps.push.outputs.digest }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Platforms** | \`linux/amd64\`, \`linux/arm64\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **SBOM** | Attached (BuildKit) |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Provenance** | SLSA Level 2 (GitHub Attestation) |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Signed** | Cosign keyless (Sigstore OIDC) |" >> $GITHUB_STEP_SUMMARY
+
+      - name: Stop container
+        if: always()
+        run: docker stop landing && docker rm landing || true
+
+  # ── 3. Container security scan (Trivy) ────────────────────
+  security-scan:
+    name: Container vulnerability scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: build-publish
+    steps:
+      - uses: actions/checkout@v4
+# 
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Scan for CVEs with Trivy
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: ghcr.io/${{ needs.build-publish.outputs.owner_lc }}/devops_landing@${{ needs.build-publish.outputs.digest }}
+          format: table
+          exit-code: 1
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+
+  # ── 4. Deploy ──────────────────────────────────────────────
+  deploy:
+    name: Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [validate, build-publish, security-scan]
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

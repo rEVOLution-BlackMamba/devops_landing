@@ -1,0 +1,57 @@
+name: Uptime check
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: uptime-check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    name: Probe live site and track incidents
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Probe live site
+        id: probe
+        run: |
+          URL="https://revolution-blackmamba.github.io/devops_landing/"
+          CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 15 "$URL" || echo "000")
+          echo "code=$CODE" >> "$GITHUB_OUTPUT"
+          echo "Probed $URL -> HTTP $CODE"
+
+      - name: File issue on failure
+        if: steps.probe.outputs.code != '200'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          STATUS_CODE: ${{ steps.probe.outputs.code }}
+        run: |
+          EXISTING=$(gh issue list --label uptime --state open --json number -q '.[0].number')
+          if [ -z "$EXISTING" ]; then
+            gh issue create \
+              --title "Site down (HTTP ${STATUS_CODE})" \
+              --label uptime \
+              --body "Synthetic check at $(date -u +%Y-%m-%dT%H:%M:%SZ) got HTTP ${STATUS_CODE} from https://revolution-blackmamba.github.io/devops_landing/. Auto-filed by \`uptime.yml\`; will auto-close on recovery."
+          else
+            echo "Open uptime issue #$EXISTING already exists — not filing a duplicate."
+          fi
+
+      - name: Close issue on recovery
+        if: steps.probe.outputs.code == '200'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          EXISTING=$(gh issue list --label uptime --state open --json number -q '.[0].number')
+          if [ -n "$EXISTING" ]; then
+            gh issue close "$EXISTING" --comment "Recovered — synthetic check at $(date -u +%Y-%m-%dT%H:%M:%SZ) got HTTP 200."
+            echo "Closed recovered issue #$EXISTING"
+          fi

@@ -1,0 +1,4 @@
+Contact: mailto:luis.bastida@proton.me
+Expires: 2027-06-08T00:00:00.000Z
+Canonical: https://revolution-blackmamba.github.io/devops_landing/.well-known/security.txt
+Preferred-Languages: en, es

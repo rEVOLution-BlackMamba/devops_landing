@@ -1,0 +1,11 @@
+# Send only what the Dockerfile actually needs — nothing else
+*
+!index.html
+!style.css
+!main.js
+!favicon.svg
+!nginx.conf
+!robots.txt
+!sitemap.xml
+!.well-known
+!.well-known/**

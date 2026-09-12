@@ -1,0 +1,6 @@
+# Lighthouse CI reports (generated locally, not committed)
+.lighthouseci/
+
+# Editor / OS
+.DS_Store
+*.swp

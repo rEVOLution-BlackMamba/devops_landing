@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0d1117" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+  <meta name="description" content="Luis Angel — DevOps Engineer | Cloud Architecture (AWS, Azure, GCP, Hetzner, Scaleway) | Kubernetes & GitOps Specialist" />
+  <meta property="og:title" content="Luis Angel — DevOps Engineer" />
+  <meta property="og:description" content="4+ years shipping production infrastructure across AWS, Azure, GCP, Hetzner, Scaleway, Kubernetes and GitOps." />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Luis Angel — DevOps Engineer" />
+  <meta name="twitter:description" content="4+ years shipping production infrastructure across AWS, Azure, GCP, Hetzner, Scaleway, Kubernetes and GitOps." />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://revolution-blackmamba.github.io/devops_landing/" />
+  <meta property="og:url" content="https://revolution-blackmamba.github.io/devops_landing/" />
+  <title>Luis Angel · DevOps Engineer</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+  <!-- Prevent flash of wrong theme: set data-theme before CSS renders -->
+  <script>(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);})();</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+  <link rel="preconnect" href="https://cdn.simpleicons.org" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/devicon.min.css"
+        integrity="sha384-DjehTlU5SubGD1zUGe78SkwLgw+q2y9DXnmy3EaDbXA9nvFMPW3LP5verNrWr9rW"
+        crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        integrity="sha384-/o6I2CkkWC//PSjvWC/eYN7l3xM3tJm8ZzVkCOfp//W05QcE3mlGskpoHB6XqI+B"
+        crossorigin="anonymous" />
+  <link rel="stylesheet" href="style.css?v=3" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Luis Angel",
+    "jobTitle": "DevOps Engineer",
+    "url": "https://revolution-blackmamba.github.io/devops_landing",
+    "email": "luis.bastida@proton.me",
+    "sameAs": [
+      "https://github.com/rEVOLution-BlackMamba",
+      "https://linkedin.com/in/luis-angel-b014bb2b2"
+    ],
+    "knowsAbout": ["Kubernetes", "AWS", "Azure", "GCP", "Terraform", "GitOps", "DevSecOps", "Docker"]
+  }
+  </script>
+</head>
+
+<body>
+
+  <!-- Skip link — first focusable element for keyboard users -->
+  <a href="#hero" class="skip-link">Skip to main content</a>
+
+  <!-- Scroll progress bar -->
+  <div id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo"><span class="accent">$</span> luis_angel</a>
+      <div class="nav-links">
+        <a href="#stack">Stack</a>
+        <a href="#experience">Experience</a>
+        <a href="#achievements">Achievements</a>
+        <a href="#certs">Certs</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="theme-toggle" role="group" aria-label="Color theme">
+        <button class="theme-btn" data-theme="system" aria-label="System theme" title="System default"><i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i></button>
+        <button class="theme-btn" data-theme="light"  aria-label="Light theme"  title="Light mode"><i class="fa-solid fa-sun" aria-hidden="true"></i></button>
+        <button class="theme-btn" data-theme="dark"   aria-label="Dark theme"   title="Dark mode"><i class="fa-solid fa-moon" aria-hidden="true"></i></button>
+      </div>
+      <button class="nav-hamburger" id="nav-hamburger"
+              aria-label="Open menu" aria-expanded="false" aria-controls="nav-mobile">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+      <a href="#stack">Stack</a>
+      <a href="#experience">Experience</a>
+      <a href="#achievements">Achievements</a>
+      <a href="#certs">Certs</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg-grid" aria-hidden="true"></div>
+    <div class="hero-glow"    aria-hidden="true"></div>
+
+    <div class="hero-inner">
+      <div class="terminal" aria-label="Terminal animation">
+        <div class="terminal-titlebar">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-green"></span>
+          <span class="terminal-title">luis@devops:~</span>
+        </div>
+        <div class="terminal-body">
+          <div id="terminal-output"></div>
+          <span class="cursor" id="cursor">█</span>
+        </div>
+      </div>
+
+      <div class="hero-text">
+        <h1 class="hero-name">Luis Angel</h1>
+        <p class="hero-tagline">DevOps Engineer &amp; Cloud Architect</p>
+        <p class="hero-sub">Building resilient, automated and secure infrastructure across AWS · Azure · GCP · Kubernetes · and beyond</p>
+        <div class="hero-cta">
+          <a href="https://github.com/rEVOLution-BlackMamba" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            <i class="fa-brands fa-github" aria-hidden="true"></i> GitHub
+          </a>
+          <a href="https://linkedin.com/in/luis-angel-b014bb2b2" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+            <i class="fa-brands fa-linkedin" aria-hidden="true"></i> LinkedIn
+          </a>
+          <a href="mailto:luis.bastida@proton.me" class="btn btn-ghost">
+            <i class="fa-solid fa-envelope" aria-hidden="true"></i> Email
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <a href="#stats" class="scroll-hint" aria-label="Scroll down">
+      <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+    </a>
+  </section>
+
+  <!-- STATS -->
+  <section id="stats">
+    <div class="stats-inner">
+      <div class="stat-item reveal">
+        <span class="stat-number" data-target="4" data-suffix="+">0</span>
+        <span class="stat-label">Years Experience</span>
+      </div>
+      <div class="stat-divider" aria-hidden="true"></div>
+      <div class="stat-item reveal">
+        <span class="stat-number" data-target="6" data-suffix="">0</span>
+        <span class="stat-label">Cloud Providers</span>
+      </div>
+      <div class="stat-divider" aria-hidden="true"></div>
+      <div class="stat-item reveal">
+        <span class="stat-number" data-target="0" data-suffix="" data-text="Zero">0</span>
+        <span class="stat-label">Downtime Migrations</span>
+      </div>
+      <div class="stat-divider" aria-hidden="true"></div>
+      <div class="stat-item reveal">
+        <span class="stat-number" data-target="5" data-suffix="">0</span>
+        <span class="stat-label">Companies</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECH STACK -->
+  <section id="stack">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <span class="section-label"><span class="accent">$</span> cat tech_stack.yaml</span>
+        <h2 class="section-title">Tech Stack</h2>
+      </div>
+
+      <div class="stack-group reveal">
+        <h3 class="stack-group-title"><i class="fa-solid fa-cloud" aria-hidden="true"></i> Cloud Platforms</h3>
+        <div class="stack-grid">
+          <div class="stack-card"><i class="devicon-amazonwebservices-plain-wordmark colored" aria-hidden="true"></i><span>AWS</span></div>
+          <div class="stack-card"><i class="devicon-azure-plain colored" aria-hidden="true"></i><span>Azure</span></div>
+          <div class="stack-card"><i class="devicon-googlecloud-plain colored" aria-hidden="true"></i><span>GCP</span></div>
+          <div class="stack-card"><img class="si-icon" src="https://cdn.simpleicons.org/hetzner" alt="" aria-hidden="true"><span>Hetzner</span></div>
+          <div class="stack-card"><img class="si-icon" src="https://cdn.simpleicons.org/scaleway" alt="" aria-hidden="true"><span>Scaleway</span></div>
+          <div class="stack-card"><i class="devicon-oracle-original colored" aria-hidden="true"></i><span>Oracle Cloud</span></div>
+        </div>
+      </div>
+
+      <div class="stack-group reveal">
+        <h3 class="stack-group-title"><i class="fa-solid fa-cubes" aria-hidden="true"></i> Containers &amp; Orchestration</h3>
+        <div class="stack-grid">
+          <div class="stack-card"><i class="devicon-kubernetes-plain colored" aria-hidden="true"></i><span>Kubernetes</span></div>
+          <div class="stack-card"><i class="devicon-docker-plain colored" aria-hidden="true"></i><span>Docker</span></div>
+          <div class="stack-card"><i class="devicon-helm-original colored" aria-hidden="true"></i><span>Helm</span></div>
+          <div class="stack-card"><i class="devicon-argocd-plain colored" aria-hidden="true"></i><span>ArgoCD</span></div>
+        </div>
+      </div>
+
+      <div class="stack-group reveal">
+        <h3 class="stack-group-title"><i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i> CI / CD</h3>
+        <div class="stack-grid">
+          <div class="stack-card"><i class="devicon-jenkins-plain colored" aria-hidden="true"></i><span>Jenkins</span></div>
+          <div class="stack-card"><i class="devicon-github-original colored" aria-hidden="true"></i><span>GitHub Actions</span></div>
+          <div class="stack-card"><i class="devicon-azuredevops-plain colored" aria-hidden="true"></i><span>Azure DevOps</span></div>
+          <div class="stack-card"><i class="devicon-gitlab-plain colored" aria-hidden="true"></i><span>GitLab CI</span></div>
+          <div class="stack-card"><img class="si-icon" src="https://cdn.simpleicons.org/codemagic" alt="" aria-hidden="true"><span>Codemagic</span></div>
+        </div>
+      </div>
+
+      <div class="stack-group reveal">
+        <h3 class="stack-group-title"><i class="fa-solid fa-code" aria-hidden="true"></i> Infrastructure as Code</h3>
+        <div class="stack-grid">
+          <div class="stack-card"><i class="devicon-terraform-plain colored" aria-hidden="true"></i><span>Terraform</span></div>
+          <div class="stack-card"><i class="devicon-ansible-plain colored" aria-hidden="true"></i><span>Ansible</span></div>
+          <div class="stack-card"><span class="stack-icon-text">AWX</span><span>Ansible AWX</span></div>
+        </div>
+      </div>
+
+      <div class="stack-group reveal">
+        <h3 class="stack-group-title"><i class="fa-solid fa-chart-line" aria-hidden="true"></i> Monitoring &amp; Observability</h3>
+        <div class="stack-grid">
+          <div class="stack-card"><i class="devicon-prometheus-original colored" aria-hidden="true"></i><span>Prometheus</span></div>
+          <div class="stack-card"><i class="devicon-grafana-plain colored" aria-hidden="true"></i><span>Grafana</span></div>
+          <div class="stack-card"><i class="devicon-elasticsearch-plain colored" aria-hidden="true"></i><span>Elasticsearch</span></div>
+          <div class="stack-card"><i class="devicon-kibana-plain colored" aria-hidden="true"></i><span>Kibana</span></div>
+          <div class="stack-card"><span class="stack-icon-text">LOKI</span><span>Loki</span></div>
+        </div>
+      </div>
+
+      <div class="stack-group reveal">
+        <h3 class="stack-group-title"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Security (DevSecOps)</h3>
+        <div class="stack-grid">
+          <div class="stack-card"><i class="devicon-sonarqube-plain colored" aria-hidden="true"></i><span>SonarQube</span></div>
+          <div class="stack-card"><span class="stack-icon-text">WAF</span><span>ModSecurity</span></div>
+          <div class="stack-card"><span class="stack-icon-text">SAST</span><span>SAST / DAST</span></div>
+          <div class="stack-card"><img class="si-icon" src="https://cdn.simpleicons.org/burpsuite" alt="" aria-hidden="true"><span>Burp Suite</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE TIMELINE -->
+  <section id="experience">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <span class="section-label"><span class="accent">$</span> git log --oneline career</span>
+        <h2 class="section-title">Experience</h2>
+      </div>
+
+      <div class="timeline">
+
+        <div class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="timeline-header">
+              <div>
+                <h3 class="timeline-role">Cloud &amp; DevSecOps Infrastructure Engineer</h3>
+                <span class="timeline-company">AlamOps · Spain</span>
+              </div>
+              <span class="timeline-date" data-start="2024-10" data-end="present">Oct 2024 – Present</span>
+            </div>
+            <ul class="timeline-bullets">
+              <li>Hybrid on-prem + AWS infrastructure bridged via site-to-site IPSec tunnels and MikroTik routers</li>
+              <li>Terraform + Ansible IaC with AWS FinOps practices — rightsizing, reserved instances/savings plans, cost-by-project tagging</li>
+              <li>Jenkins + GitHub Actions CI/CD with SonarQube SAST quality gates</li>
+              <li>Cilium (eBPF) CNI hardening Kubernetes L3–L7 network policy with self-healing, HA node redundancy</li>
+              <li>LLMOps: deployed OpenClaw + RouteLLM for LLM request routing, with Lakera guarding against prompt injection</li>
+              <li>Migrated gaming/web APIs to serverless Cloud Run behind Cloud Armor + Cloud CDN; GCP governance-as-code via shared Terraform modules</li>
+              <li>Real-time Big Data pipeline for Spanish low-emission-zone (ZBE) portals, processing ANPR events at scale</li>
+            </ul>
+            <div class="timeline-tags">
+              <span class="tag">AWS</span><span class="tag">GCP</span><span class="tag">Terraform</span>
+              <span class="tag">Ansible</span><span class="tag">Kubernetes</span><span class="tag">Cilium</span>
+              <span class="tag">LLMOps</span><span class="tag">Jenkins</span><span class="tag">SonarQube</span>
+              <span class="tag">IPSec</span><span class="tag">FinOps</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="timeline-header">
+              <div>
+                <h3 class="timeline-role">DevOps Engineer</h3>
+                <span class="timeline-company">QA-BIT · Spain</span>
+              </div>
+              <span class="timeline-date" data-start="2024-07" data-end="2026-07">Jul 2024 – Jul 2026</span>
+            </div>
+            <ul class="timeline-bullets">
+              <li>Led GCP → AWS microservices &amp; database migration with Terraform under tight deadlines</li>
+              <li>Hardened Azure network security — Azure SQL Server, App Service and Linux Web Apps behind Private Endpoints in VNets, with subnet/NIC-level restrictions</li>
+              <li>Azure DevOps YAML pipelines with automated quality gates and secure secrets management</li>
+              <li>Transitioned deployments to GitOps model: GitHub Actions + Helm + ArgoCD, with ACR container lifecycle management</li>
+              <li>Flutter mobile CI/CD via Codemagic; Odoo + WordPress production management and backups</li>
+            </ul>
+            <div class="timeline-tags">
+              <span class="tag">GCP</span><span class="tag">AWS</span><span class="tag">Azure</span>
+              <span class="tag">ArgoCD</span><span class="tag">Helm</span><span class="tag">Codemagic</span>
+              <span class="tag">GitOps</span><span class="tag">Terraform</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="timeline-header">
+              <div>
+                <h3 class="timeline-role">DevOps Team Leader</h3>
+                <span class="timeline-company">DATYS · Santa Clara, Cuba</span>
+              </div>
+              <span class="timeline-date" data-start="2023-07" data-end="2024-07">Jul 2023 – Jul 2024</span>
+            </div>
+            <ul class="timeline-bullets">
+              <li>Led 3-engineer team — centralized and standardized deployments using Ansible AWX</li>
+              <li>Embedded DAST into CI/CD pipelines for automated runtime vulnerability detection</li>
+              <li>Manual web application pentests with Burp Suite; patched critical gaps before production</li>
+            </ul>
+            <div class="timeline-tags">
+              <span class="tag">Leadership</span><span class="tag">Ansible AWX</span>
+              <span class="tag">DAST</span><span class="tag">Burp Suite</span><span class="tag">CI/CD</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="timeline-header">
+              <div>
+                <h3 class="timeline-role">Kubernetes Specialist</h3>
+                <span class="timeline-company">QA-BIT · Spain</span>
+              </div>
+              <span class="timeline-date" data-start="2022-11" data-end="2024-02">Nov 2022 – Feb 2024</span>
+            </div>
+            <ul class="timeline-bullets">
+              <li>Cloud-native CI/CD on Oracle Cloud (OKE) with Kubernetes, orchestrating delivery across multiple environments</li>
+              <li>Secure, privilege-less container builds with Jenkins + Kaniko to minimize attack surface</li>
+              <li>KrakenD API Gateway + Redis routing; Loki log centralization for observability</li>
+              <li>Standardized the deployment lifecycle using cloud-native tooling and Visual Builder</li>
+            </ul>
+            <div class="timeline-tags">
+              <span class="tag">Oracle Cloud</span><span class="tag">OKE</span><span class="tag">Kaniko</span>
+              <span class="tag">KrakenD</span><span class="tag">Loki</span><span class="tag">Redis</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="timeline-header">
+              <div>
+                <h3 class="timeline-role">DevOps Specialist</h3>
+                <span class="timeline-company">DATYS · Santa Clara, Cuba</span>
+              </div>
+              <span class="timeline-date" data-start="2022-07" data-end="2023-08">Jul 2022 – Aug 2023</span>
+            </div>
+            <ul class="timeline-bullets">
+              <li>DC/OS → Kubernetes migration across 4 production environments — zero downtime</li>
+              <li>Shift-left security: SAST integrated into CI/CD + ModSecurity WAF deployment</li>
+              <li>On-premise GitLab administration and full CI/CD pipeline architecture</li>
+              <li>ELK + Prometheus centralized observability stack</li>
+              <li>HA distributed data systems: Hadoop (HDFS/YARN) + Spark with ZooKeeper failover, Cassandra multi-node replication, PostgreSQL with HAProxy + PgBouncer</li>
+            </ul>
+            <div class="timeline-tags">
+              <span class="tag">Kubernetes</span><span class="tag">DC/OS</span><span class="tag">SAST</span>
+              <span class="tag">ModSecurity</span><span class="tag">ELK</span><span class="tag">GitLab</span>
+              <span class="tag">Hadoop</span><span class="tag">Spark</span><span class="tag">Cassandra</span>
+              <span class="tag">PostgreSQL</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- KEY ACHIEVEMENTS -->
+  <section id="achievements">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <span class="section-label"><span class="accent">$</span> grep -r "impact" ./career/</span>
+        <h2 class="section-title">Key Achievements</h2>
+      </div>
+
+      <div class="achievements-grid">
+
+        <div class="achievement-card reveal">
+          <div class="achievement-icon"><i class="devicon-kubernetes-plain colored" aria-hidden="true"></i></div>
+          <h3>Zero-Downtime Migration</h3>
+          <p>DC/OS → Kubernetes across 4 production environments — zero service interruption, full rollback strategy, zero developer impact.</p>
+        </div>
+
+        <div class="achievement-card reveal">
+          <div class="achievement-icon"><i class="fa-solid fa-shield-halved icon-accent" aria-hidden="true"></i></div>
+          <h3>Shift-Left Security</h3>
+          <p>Embedded SAST + DAST gates into CI/CD pipelines and deployed ModSecurity WAF — vulnerabilities caught before they reach staging.</p>
+        </div>
+
+        <div class="achievement-card reveal">
+          <div class="achievement-icon"><i class="fa-solid fa-cloud-arrow-right icon-accent" aria-hidden="true"></i></div>
+          <h3>Multi-Cloud Migration</h3>
+          <p>GCP → AWS microservices migration with GitOps (ArgoCD + Helm), enabling independent per-team deployments under tight deadlines.</p>
+        </div>
+
+        <div class="achievement-card reveal">
+          <div class="achievement-icon"><i class="devicon-grafana-plain colored" aria-hidden="true"></i></div>
+          <h3>Full Observability Stack</h3>
+          <p>Deployed Prometheus + Grafana with RBAC, ELK Stack, and Loki across hybrid cloud and on-premise — one unified source of truth.</p>
+        </div>
+
+        <div class="achievement-card reveal">
+          <div class="achievement-icon"><i class="fa-solid fa-mobile-screen icon-accent" aria-hidden="true"></i></div>
+          <h3>Mobile CI/CD Pipeline</h3>
+          <p>End-to-end Flutter CI/CD with Codemagic — automated builds, code signing, and App Store / Play Store deployments.</p>
+        </div>
+
+        <div class="achievement-card reveal">
+          <div class="achievement-icon"><i class="devicon-terraform-plain colored" aria-hidden="true"></i></div>
+          <h3>IaC at Scale</h3>
+          <p>Full Terraform + Ansible automation for hybrid infrastructure — reproducible environments, IPSec tunnel provisioning, zero config drift.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTS & PUBLICATIONS -->
+  <section id="certs">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <span class="section-label"><span class="accent">$</span> ls -la ./credentials/</span>
+        <h2 class="section-title">Certs &amp; Publications</h2>
+      </div>
+
+      <div class="certs-row">
+
+        <div class="certs-col reveal">
+          <h3 class="certs-col-title"><i class="fa-solid fa-certificate" aria-hidden="true"></i> Certifications</h3>
+          <div class="cert-card">
+            <div class="cert-icon"><i class="devicon-linux-plain colored" aria-hidden="true"></i></div>
+            <div>
+              <div class="cert-name">Linux Essentials</div>
+              <div class="cert-issuer">Linux Professional Institute (LPI)</div>
+            </div>
+          </div>
+          <div class="cert-card">
+            <div class="cert-icon"><i class="fa-solid fa-language icon-accent" aria-hidden="true"></i></div>
+            <div>
+              <div class="cert-name">TOEFL iBT — C1 Advanced</div>
+              <div class="cert-issuer">Educational Testing Service (ETS)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="certs-col reveal">
+          <h3 class="certs-col-title"><i class="fa-solid fa-book-open" aria-hidden="true"></i> Publications</h3>
+          <div class="pub-card">
+            <div class="pub-icon"><i class="devicon-kubernetes-plain colored" aria-hidden="true"></i></div>
+            <div>
+              <div class="pub-title">Plan de migración a Kubernetes</div>
+              <div class="pub-desc">Migration strategy and implementation guide for DC/OS to Kubernetes in production environments.</div>
+            </div>
+          </div>
+          <div class="pub-card">
+            <div class="pub-icon"><i class="devicon-elasticsearch-plain colored" aria-hidden="true"></i></div>
+            <div>
+              <div class="pub-title">Monitorización Funcional: un caso de uso mediante Elastic Stack</div>
+              <div class="pub-desc">Functional monitoring patterns and observability use cases using the ELK Stack in production.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT / FOOTER -->
+  <footer id="contact">
+    <div class="footer-glow" aria-hidden="true"></div>
+    <div class="footer-inner">
+      <div class="footer-brand reveal">
+        <span class="footer-logo"><span class="accent">$</span> contact luis_angel</span>
+        <p class="footer-sub">Open to senior DevOps · Cloud · Platform Engineering roles.</p>
+      </div>
+
+      <div class="footer-links reveal">
+        <div class="footer-link-row">
+          <a href="mailto:luis.bastida@proton.me" class="footer-link">
+            <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+            <span>luis.bastida@proton.me</span>
+          </a>
+          <button class="copy-btn" data-copy="luis.bastida@proton.me" aria-label="Copy email address">
+            <i class="fa-regular fa-copy" aria-hidden="true"></i>
+          </button>
+        </div>
+        <a href="https://linkedin.com/in/luis-angel-b014bb2b2" target="_blank" rel="noopener noreferrer" class="footer-link">
+          <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
+          <span>linkedin.com/in/luis-angel-b014bb2b2</span>
+        </a>
+        <a href="https://github.com/rEVOLution-BlackMamba" target="_blank" rel="noopener noreferrer" class="footer-link">
+          <i class="fa-brands fa-github" aria-hidden="true"></i>
+          <span>github.com/rEVOLution-BlackMamba</span>
+        </a>
+      </div>
+
+      <div class="footer-bottom reveal">
+        <p>© <span id="footer-year">2026</span> Luis Angel · Pure HTML/CSS/JS · Deployed via GitHub Pages</p>
+        <p class="footer-meta">
+          <a href="https://github.com/rEVOLution-BlackMamba/devops_landing" target="_blank" rel="noopener noreferrer">
+            <i class="fa-brands fa-github" aria-hidden="true"></i> View source
+          </a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to top -->
+  <button id="back-to-top" aria-label="Back to top">
+    <i class="fa-solid fa-chevron-up" aria-hidden="true"></i>
+  </button>
+
+  <script src="main.js?v=3"></script>
+</body>
+</html>
