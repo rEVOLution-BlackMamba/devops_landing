@@ -6,9 +6,7 @@ on:
     - cron: '*/30 * * * *'
   workflow_dispatch:
 
-permissions:
-  contents: read
-  issues: write
+permissions: {}
 
 concurrency:
   group: uptime-check
@@ -19,6 +17,8 @@ jobs:
     name: Probe live site and track incidents
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    permissions:
+      issues: write  # file/close the uptime incident issue; no checkout needed
     steps:
       - name: Probe live site
         id: probe

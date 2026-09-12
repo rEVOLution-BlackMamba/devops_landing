@@ -1,5 +1,5 @@
 # Stage 1 — validate static assets exist and are non-empty
-FROM alpine:3.24 AS validator
+FROM alpine:3.24@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b AS validator
 WORKDIR /src
 COPY index.html style.css main.js favicon.svg robots.txt sitemap.xml ./
 COPY .well-known ./.well-known/
@@ -8,7 +8,7 @@ RUN test -s index.html && test -s style.css && test -s main.js && test -s favico
     && echo "Static assets validated."
 
 # Stage 2 — serve with hardened nginx
-FROM nginx:1.31-alpine
+FROM nginx:1.31-alpine@sha256:72ba65eb42c10344912a84ff42408db7d34f2feb642204570ab8fc5ffd29f1d3
 
 LABEL maintainer="luis.bastida@proton.me"
 LABEL org.opencontainers.image.title="devops-landing"

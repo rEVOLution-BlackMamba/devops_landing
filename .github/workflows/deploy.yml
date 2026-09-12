@@ -6,12 +6,10 @@ on:
       - main
   workflow_dispatch:
 
+# Least-privilege baseline — each job below elevates only the specific
+# permissions it needs, instead of granting write access to every job.
 permissions:
   contents: read
-  pages: write
-  id-token: write
-  packages: write
-  attestations: write
 
 concurrency:
   group: pages
@@ -81,6 +79,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     needs: validate
+    permissions:
+      contents: read
+      packages: write      # push image to GHCR
+      id-token: write      # OIDC for Cosign + SLSA attestation
+      attestations: write  # persist SLSA provenance attestation
     outputs:
       digest: ${{ steps.push.outputs.digest }}
       owner_lc: ${{ steps.owner.outputs.lc }}
@@ -192,6 +195,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     needs: build-publish
+    permissions:
+      contents: read
+      packages: read  # only pulling the already-published image to scan it
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 # 
@@ -217,6 +223,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     needs: [validate, build-publish, security-scan]
+    permissions:
+      contents: read
+      pages: write      # publish to GitHub Pages
+      id-token: write   # OIDC for the Pages deployment
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
